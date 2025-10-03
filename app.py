@@ -4,7 +4,7 @@ import sqlite3
 from flask import Flask, flash, redirect, render_template, request, jsonify
 
 app = Flask(__name__)
-API_KEY = "9f44049fcbe24e75b3b160827252108"
+API_KEY = "e4f9d234b1694596a74194334252909"
 custom_id = secrets.token_hex(16)
 public_ip = requests.get("https://api.ipify.org").text
 
@@ -25,10 +25,10 @@ def new():
     conn.commit()
     if request.method == 'POST':
         data = request.get_json()
-        lat = data.get("lat")
-        lon = data.get("lon")
-        return jsonify({"redirect": f"/{lat}/{lon}"})
-    else:
+        if data:
+            lat = data.get("lat")
+            lon = data.get("lon")
+            return jsonify({"redirect": f"/{lat}/{lon}"})
         url = f"https://api.weatherapi.com/v1/current.json?key={API_KEY}&q={public_ip}&custom_id={custom_id}"
         response = requests.get(url)
         data = response.json()
@@ -76,7 +76,9 @@ def new():
                 back = f"./static/img/{text}-night.jpg"
         else:
             back = f"./static/img/bad-weather-2772933_1280.jpg"
-        return render_template("main.html", result=result, final =final, background=back, text=text, city=CITY) 
+        return render_template("main.html", result=result, final =final, background=back, text=text, city=CITY)
+    else:
+        return render_template('main.html', result="result", final ="final", background="back", text="text", city="CITY")
 
 
 @app.route('/<lat>/<lon>', methods=['GET'])
@@ -139,7 +141,7 @@ def main(lat, lon):
                     back = f"../static/img/{text}-night.jpg"
             else:
                 back = f"./static/img/bad-weather-2772933_1280.jpg"
-            return render_template("main copy.html", result=result, final =final, background=back, text=text, city=CITY)
+            return render_template("main copy.html", result=result, final =final, background=back, text=text, city=CITY, lat=lat, lon=lon)
         else:
             return render_template("error.html", message= data['error']['message'])
 

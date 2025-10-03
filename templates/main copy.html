@@ -909,6 +909,155 @@
         ::-webkit-scrollbar-thumb:hover {
             background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
         }
+
+        /* DATE PICKER MODAL CSS */
+        .date-picker-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .active {
+            display: flex;
+        }
+
+        .date-picker-container {
+            background: var(--glass-bg);
+            border: 2px solid var(--glass-border);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--glass-shadow);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            max-width: 450px;
+            width: 90%;
+            animation: slideInUp 0.5s ease-out;
+        }
+
+        .date-picker-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-align: center;
+            margin-bottom: 25px;
+            font-family: "Montserrat", sans-serif;
+        }
+
+        .date-inputs-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .date-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .date-input-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .date-select {
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius-small);
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: 'Orbitron', monospace;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .date-select:hover {
+            background: rgba(0, 212, 255, 0.2);
+            border-color: var(--neon-blue);
+            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
+        }
+
+        .date-select:focus {
+            outline: none;
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.2);
+        }
+
+        .date-select option {
+            background: #1a1a2e;
+            color: white;
+            padding: 10px;
+        }
+
+        .date-picker-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .date-picker-btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: var(--border-radius-small);
+            background: linear-gradient(135deg, var(--neon-blue) 0%, var(--neon-purple) 100%);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: "Montserrat", sans-serif;
+        }
+
+        .date-picker-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 212, 255, 0.4);
+        }
+
+        .date-picker-btn.cancel {
+            background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
+        }
+
+        .date-picker-btn.cancel:hover {
+            box-shadow: 0 8px 20px rgba(245, 87, 108, 0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .date-inputs-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .Choose {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            border: gray solid 1px;
+            color: gray;
+            border-radius: 15px;
+            padding: 2px;
+            background: none;
+        }
+
+        .Choose:hover {
+            color: white;
+            border-color: white;
+        }
     </style>
 </head>
 
@@ -993,7 +1142,7 @@
                     <h3 class="section-title">Current Time</h3>
                     <div class="time-display">
                         <p id="time" role="timer" aria-live="polite">--:--:--</p>
-                        <p id="date">--</p>
+                        <p id="date-pop">--</p>
                     </div>
                 </div>
             </div>
@@ -1010,9 +1159,42 @@
                 <div class="coordinates-display" id="coordinates">
                     Latitude: --, Longitude: --
                 </div>
+                    <div id="app">
+                        <div id="clock">
+                            <p id="date"></p>
+                        </div>
+                    </div>
                 <div class="map-buttons">
                     <button class="map-btn cancel" id="cancel-map">Cancel</button>
                     <button class="map-btn" id="submit-location">Submit</button>
+                    <button  onclick="datepopup()" class="Choose">Choose Date</button>
+                </div>
+                
+                <div class="date-picker-modal" id="date-picker-modal">
+                    <form action="/{{lat}}/{{lon}}" method="get">
+                        <div class="date-picker-container">
+                            <h3 class="date-picker-title">Select Date</h3>
+                            <div class="date-inputs-container">
+                                <div class="date-input-group">
+                                    <label class="date-input-label" for="day-select">Day</label>
+                                    <select class="date-select" id="day-select" name="day"></select>
+                                </div>
+                                <div class="date-input-group">
+                                    <label class="date-input-label" for="month-select" class="month">Month</label>
+                                    <select class="date-select" id="month-select" name="month"></select>
+                                </div>
+                                <div class="date-input-group">
+                                    <label class="date-input-label" for="year-select">Year</label>
+                                    <select class="date-select" id="year-select" name="year"></select>
+                                </div>
+                            </div>
+                            <div class="date-picker-buttons">
+                                <a class="date-picker-btn cancel" id="cancel-date">Cancel</a>
+                                
+                                <button class="date-picker-btn" id="apply-date" type="submit">Apply</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -1022,11 +1204,61 @@
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
     <script>
+        // ===== CLOCK FUNCTIONALITY =====
+function updateClock() {
+    const timeElement = document.getElementById("time");
+    const dateElement = document.getElementById("date");
+    const dateElementPop = document.getElementById("date-pop");
+
+    try {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, "0");
+        const minutes = String(now.getMinutes()).padStart(2, "0");
+        const seconds = String(now.getSeconds()).padStart(2, "0");
+
+        const timeString = `${hours}:${minutes}:${seconds}`;
+        const dateOptions = {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        };
+        const dateString = now.toLocaleDateString('en-US', dateOptions);
+
+        if (timeElement) {
+            timeElement.textContent = timeString;
+        }
+
+        if (dateElement) {
+            dateElement.textContent = dateString;
+        }
+
+        if (dateElementPop) {
+            dateElementPop.textContent = dateString;
+        }
+
+    } catch (error) {
+        console.error('Error updating clock:', error);
+
+        if (timeElement) timeElement.textContent = "Error";
+        if (dateElement) dateElement.textContent = "--/--/----";
+        if (dateElementPop) dateElementPop.textContent = "--/--/----";
+    }
+}
+
+function initializeClock() {
+    updateClock();
+    setInterval(updateClock, 1000);
+}
+
+window.addEventListener('DOMContentLoaded', initializeClock);
+
         // ===== LOADING MANAGEMENT =====
         class LoadingManager {
             constructor() {
                 this.totalResources = 0;
                 this.loadedResources = 0;
+
                 this.isComplete = false;
                 this.progressFill = document.getElementById("progress-fill");
                 this.progressText = document.getElementById("progress-text");
@@ -1290,36 +1522,6 @@
             }, 1500);
         }
 
-
-        // ===== CLOCK FUNCTIONALITY =====
-        function updateClock() {
-            try {
-                const now = new Date();
-                const hours = String(now.getHours()).padStart(2, "0");
-                const minutes = String(now.getMinutes()).padStart(2, "0");
-                const seconds = String(now.getSeconds()).padStart(2, "0");
-
-                const timeElement = document.getElementById("time");
-                const dateElement = document.getElementById("date");
-
-                if (timeElement) {
-                    timeElement.textContent = `${hours}:${minutes}:${seconds}`;
-                }
-
-                if (dateElement) {
-                    const options = {
-                        weekday: 'long',
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric'
-                    };
-                    dateElement.textContent = now.toLocaleDateString('en-US', options);
-                }
-            } catch (error) {
-                console.error('Error updating clock:', error);
-            }
-        }
-
         let clockInterval;
         function initializeClock() {
             updateClock();
@@ -1366,6 +1568,88 @@
         } else {
             loadingManager = new LoadingManager();
             initApp();
+        }
+
+        // DATE PICKER JAVASCRIPT
+        function populateDateSelects() {
+            const daySelect = document.getElementById('day-select');
+            const monthSelect = document.getElementById('month-select');
+            const yearSelect = document.getElementById('year-select');
+
+            // Populate days (1-31)
+            for (let i = 1; i <= 31; i++) {
+                daySelect.add(new Option(i, i));
+            }
+
+            // Populate months
+            const months = ['January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'];
+            months.forEach((month, index) => {
+                monthSelect.add(new Option(month, index + 1));
+            });
+
+            // Populate years (current year ± 100 years)
+            const currentYear = new Date().getFullYear();
+            for (let i = currentYear; i <= currentYear + 100; i++) {
+                yearSelect.add(new Option(i, i));
+            }
+
+            // Set current date as default
+            const now = new Date();
+            daySelect.value = now.getDate();
+            monthSelect.value = now.getMonth() + 1;
+            yearSelect.value = now.getFullYear();
+        }
+
+        function openDatePicker() {
+            document.getElementById('date-picker-modal').classList.add('active');
+            // Update to current date
+            const now = new Date();
+            document.getElementById('day-select').value = now.getDate();
+            document.getElementById('month-select').value = now.getMonth() + 1;
+            document.getElementById('year-select').value = now.getFullYear();
+        }
+
+        function closeDatePicker() {
+            document.getElementById('date-picker-modal').classList.remove('active');
+        }
+
+        function applyDateSelection() {
+            const day = document.getElementById('day-select').value;
+            const month = document.getElementById('month-select').value;
+            const year = document.getElementById('year-select').value;
+            
+            const selectedDate = new Date(year, month - 1, day);
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            
+            // Update your date element (adjust the ID as needed)
+            document.getElementById('date-pop').textContent = selectedDate.toLocaleDateString('en-US', options);
+            
+            closeDatePicker();
+        }
+
+        // Initialize and add event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            populateDateSelects();
+            
+            // Add click event to date element to open picker
+            document.getElementById('date-pop').addEventListener('click', openDatePicker);
+            
+            // Button event listeners
+            document.getElementById('cancel-date').addEventListener('click', closeDatePicker);
+            document.getElementById('apply-date').addEventListener('click', applyDateSelection);
+            
+            // Close on background click
+            document.getElementById('date-picker-modal').addEventListener('click', function(e) {
+                if (e.target === this) closeDatePicker();
+            });
+        });
+
+        let counter = 0
+
+        function datepopup() {
+            const modal = document.getElementById('date-picker-modal');
+            modal.classList.toggle('active');
         }
     </script>
 
