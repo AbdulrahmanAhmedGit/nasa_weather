@@ -31,7 +31,6 @@
             z-index: 9999;
             color: #fff;
             font-family: "Montserrat", sans-serif;
-            transition: opacity 0.5s ease-out;
         }
 
         #progress-bar {
@@ -63,7 +62,6 @@
             font-size: 14px;
             opacity: 0.8;
             text-align: center;
-            transition: opacity 0.3s ease-in-out;
         }
 
         .hidden {
@@ -72,27 +70,37 @@
 
         /* ===== CSS VARIABLES ===== */
         :root {
+            /* Color Gradients */
             --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             --tertiary-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
             --dark-gradient: linear-gradient(135deg, #232526 0%, #414345 100%);
+
+            /* Glassmorphism Properties */
             --glass-bg: rgba(255, 255, 255, 0.12);
             --glass-border: rgba(255, 255, 255, 0.25);
             --glass-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             --glass-hover-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+
+            /* Neon Colors */
             --neon-blue: #00d4ff;
             --neon-pink: #ff0080;
             --neon-purple: #8a2be2;
             --neon-green: #39ff14;
+
+            /* Text Colors */
             --text-primary: #ffffff;
             --text-secondary: rgba(255, 255, 255, 0.85);
             --text-accent: #00d4ff;
+
+            /* Design Properties */
             --border-radius: 25px;
             --border-radius-small: 15px;
             --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             --transition-bounce: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
 
+        /* ===== BASE STYLES ===== */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -116,15 +124,32 @@
             line-height: 1.6;
         }
 
+        /* ===== BACKGROUND ANIMATIONS ===== */
         @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
+        /* Floating Particles Background */
         @keyframes floatParticles {
-            0%, 100% { transform: translateY(0) translateX(0); }
-            50% { transform: translateY(-20px) translateX(20px); }
+
+            0%,
+            100% {
+                transform: translateY(0) translateX(0);
+            }
+
+            50% {
+                transform: translateY(-20px) translateX(20px);
+            }
         }
 
         body::before {
@@ -143,6 +168,7 @@
             z-index: -1;
         }
 
+        /* ===== LAYOUT CONTAINERS ===== */
         .container-wrapper {
             display: flex;
             justify-content: center;
@@ -160,7 +186,10 @@
             border: 2px solid var(--glass-border);
             border-radius: var(--border-radius);
             padding: clamp(20px, 3vw, 30px);
-            box-shadow: var(--glass-shadow), inset 0 2px 0 rgba(255, 255, 255, 0.2), 0 0 80px rgba(0, 212, 255, 0.1);
+            box-shadow:
+                var(--glass-shadow),
+                inset 0 2px 0 rgba(255, 255, 255, 0.2),
+                0 0 80px rgba(0, 212, 255, 0.1);
             backdrop-filter: blur(25px) saturate(150%);
             -webkit-backdrop-filter: blur(25px) saturate(150%);
             max-width: 1200px;
@@ -170,10 +199,13 @@
             overflow: hidden;
         }
 
+        /* ===== SIDEBAR COMPONENT ===== */
         .side-bar {
             grid-column: 1;
             grid-row: 1 / 3;
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 100%);
+            background: linear-gradient(145deg,
+                    rgba(255, 255, 255, 0.15) 0%,
+                    rgba(255, 255, 255, 0.05) 100%);
             border: 1px solid var(--glass-border);
             border-radius: var(--border-radius-small);
             padding: clamp(15px, 2.5vw, 25px);
@@ -200,10 +232,13 @@
             left: 100%;
         }
 
+        /* Sidebar items */
         .side_Cs {
             font-size: clamp(0.85rem, 2vw, 1rem);
             padding: clamp(10px, 1.5vw, 14px);
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            background: linear-gradient(135deg,
+                    rgba(255, 255, 255, 0.1) 0%,
+                    rgba(255, 255, 255, 0.05) 100%);
             border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: var(--border-radius-small);
             transition: var(--transition-smooth);
@@ -217,8 +252,10 @@
             font-family: "Inter", sans-serif;
         }
 
-        .side_Cs:hover, #newadd {
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.2) 0%, rgba(255, 0, 128, 0.2) 100%);
+        .side_Cs:hover {
+            background: linear-gradient(135deg,
+                    rgba(0, 212, 255, 0.2) 0%,
+                    rgba(255, 0, 128, 0.2) 100%);
             transform: translateX(5px);
             border-color: var(--neon-blue);
             box-shadow: 0 8px 25px rgba(0, 212, 255, 0.3);
@@ -239,6 +276,7 @@
             font-family: "Montserrat", sans-serif;
         }
 
+        /* ===== WEATHER CARDS COMPONENT ===== */
         .weather-cards {
             grid-column: 2;
             grid-row: 1;
@@ -249,7 +287,9 @@
         }
 
         .card_ma {
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 100%);
+            background: linear-gradient(145deg,
+                    rgba(255, 255, 255, 0.15) 0%,
+                    rgba(255, 255, 255, 0.05) 100%);
             border: 1px solid var(--glass-border);
             border-radius: var(--border-radius-small);
             padding: clamp(20px, 3vw, 30px);
@@ -264,6 +304,7 @@
             min-height: 250px;
         }
 
+        /* Holographic Effect */
         .card_ma::after {
             content: '';
             position: absolute;
@@ -271,7 +312,10 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+            background: linear-gradient(45deg,
+                    transparent 30%,
+                    rgba(255, 255, 255, 0.1) 50%,
+                    transparent 70%);
             transform: translateX(-100%);
             transition: transform 0.6s ease;
         }
@@ -280,12 +324,17 @@
             transform: translateX(100%);
         }
 
-        .card_ma:hover, .side-bar:hover {
+        .card_ma:hover,
+        .side-bar:hover {
             transform: translateY(-8px) scale(1.02);
-            box-shadow: var(--glass-hover-shadow), inset 0 2px 0 rgba(255, 255, 255, 0.3), 0 0 50px var(--neon-blue);
+            box-shadow:
+                var(--glass-hover-shadow),
+                inset 0 2px 0 rgba(255, 255, 255, 0.3),
+                0 0 50px var(--neon-blue);
             border-color: rgba(255, 255, 255, 0.4);
         }
 
+        /* ===== TEMPERATURE DISPLAY ===== */
         .temperature-display {
             position: relative;
         }
@@ -307,10 +356,13 @@
         }
 
         @keyframes textGlow {
-            0%, 100% {
+
+            0%,
+            100% {
                 background-position: 0% 50%;
                 filter: brightness(1);
             }
+
             50% {
                 background-position: 100% 50%;
                 filter: brightness(1.3);
@@ -338,6 +390,7 @@
             font-family: "Inter", sans-serif;
         }
 
+        /* ===== CLICK INDICATOR ===== */
         .click-indicator {
             position: relative;
             margin-top: auto;
@@ -353,10 +406,13 @@
         }
 
         @keyframes pulseHint {
-            0%, 100% {
+
+            0%,
+            100% {
                 opacity: 0.8;
                 transform: translateY(0);
             }
+
             50% {
                 opacity: 1;
                 transform: translateY(-3px);
@@ -367,11 +423,13 @@
             font-size: 0.9rem;
         }
 
+        /* Reduce animation on hover to avoid distraction */
         #city-card:hover .click-indicator {
             animation: none;
             opacity: 0.9;
         }
 
+        /* ===== TIME CARD COMPONENT ===== */
         .time-card {
             grid-column: 2;
             grid-row: 2;
@@ -397,8 +455,15 @@
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
         }
 
         #date {
@@ -410,6 +475,7 @@
             font-family: "Inter", sans-serif;
         }
 
+        /* ===== TYPOGRAPHY COMPONENTS ===== */
         .section-title {
             font-size: clamp(1.2rem, 3vw, 1.6rem);
             font-weight: 600;
@@ -434,6 +500,7 @@
             border-radius: 2px;
         }
 
+        /* ===== WEATHER ICONS ===== */
         .weather-icon {
             font-size: clamp(2rem, 4vw, 3rem);
             margin-bottom: 10px;
@@ -443,10 +510,18 @@
         }
 
         @keyframes iconFloat {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
         }
 
+        /* ===== MAP MODAL STYLES ===== */
         .map-modal {
             display: none;
             position: fixed;
@@ -552,6 +627,7 @@
             transform: rotate(90deg);
         }
 
+        /* ===== RESPONSIVE DESIGN ===== */
         @media (max-width: 1200px) {
             .main-container {
                 grid-template-columns: 250px 1fr;
@@ -564,6 +640,7 @@
                 grid-template-rows: auto auto auto;
                 gap: 20px;
             }
+
             .side-bar {
                 grid-column: 1;
                 grid-row: 1;
@@ -571,10 +648,12 @@
                 grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
                 gap: 15px;
             }
+
             .weather-cards {
                 grid-column: 1;
                 grid-row: 2;
             }
+
             .time-card {
                 grid-column: 1;
                 grid-row: 3;
@@ -585,55 +664,69 @@
             body {
                 padding: 5px;
             }
+
             .main-container {
                 padding: 20px;
                 gap: 15px;
             }
+
             .weather-cards {
                 grid-template-columns: 1fr !important;
                 gap: 15px !important;
             }
+
             .card_ma {
                 min-height: 180px;
                 padding: 20px !important;
             }
+
             .city-name {
                 font-size: 1.6rem !important;
                 margin: 10px 0 !important;
             }
+
             .click-indicator {
                 margin-top: auto;
                 padding-top: 15px;
             }
+
             .temperature-display .no0 {
                 font-size: 2.8rem !important;
                 margin: 10px 0;
             }
+
             .weather-state {
                 font-size: 1.2rem !important;
                 margin: 10px 0 !important;
             }
+
             .side-bar {
                 grid-template-columns: 1fr;
             }
+
             .side_Cs {
                 padding: 15px;
                 flex-direction: column;
                 text-align: center;
                 gap: 8px;
             }
-            .side_Cs .label, .side_Cs .value {
+
+            .side_Cs .label,
+            .side_Cs .value {
                 font-size: 1rem;
             }
+
             .map-container {
                 width: 95%;
                 height: 85%;
                 padding: 15px;
             }
+
             .map-controls {
                 flex-direction: column;
                 gap: 10px;
             }
+
             .map-buttons {
                 width: 100%;
                 justify-content: space-between;
@@ -645,55 +738,76 @@
                 padding: 15px;
                 border-radius: 20px;
             }
+
             .card_ma {
                 min-height: 160px;
                 padding: 15px !important;
             }
+
             .city-name {
                 font-size: 1.4rem !important;
             }
+
             .temperature-display .no0 {
                 font-size: 2.5rem !important;
             }
+
             .weather-icon {
                 font-size: 2.2rem !important;
             }
+
             .click-indicator {
                 font-size: 0.8rem;
             }
+
             .side-bar {
                 padding: 20px;
                 border-radius: 12px;
             }
+
             .side_Cs {
                 padding: 12px;
                 border-radius: 10px;
             }
+
             .map-container {
                 padding: 10px;
             }
+
             .map-btn {
                 padding: 8px 15px;
                 font-size: 14px;
             }
         }
 
+        /* ===== ANIMATIONS & EFFECTS ===== */
+        /* Loading Animation */
         .loading-shimmer {
-            background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.1) 100%);
+            background: linear-gradient(90deg,
+                    rgba(255, 255, 255, 0.1) 0%,
+                    rgba(255, 255, 255, 0.3) 50%,
+                    rgba(255, 255, 255, 0.1) 100%);
             background-size: 200% 100%;
             animation: shimmer 2s ease-in-out infinite;
         }
 
         @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
+            0% {
+                background-position: -200% 0;
+            }
+
+            100% {
+                background-position: 200% 0;
+            }
         }
 
+        /* Entrance Animations */
         @keyframes slideInUp {
             from {
                 opacity: 0;
                 transform: translateY(50px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -705,6 +819,7 @@
                 opacity: 0;
                 transform: translateX(-50px);
             }
+
             to {
                 opacity: 1;
                 transform: translateX(0);
@@ -716,6 +831,7 @@
                 opacity: 0;
                 transform: translateX(50px);
             }
+
             to {
                 opacity: 1;
                 transform: translateX(0);
@@ -746,14 +862,19 @@
             animation: slideInRight 1s ease-out 1s both;
         }
 
+        /* ===== ACCESSIBILITY ===== */
         @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
+
+            *,
+            *::before,
+            *::after {
                 animation-duration: 0.01ms !important;
                 animation-iteration-count: 1 !important;
                 transition-duration: 0.01ms !important;
             }
         }
 
+        /* High contrast mode */
         @media (prefers-contrast: high) {
             :root {
                 --glass-bg: rgba(0, 0, 0, 0.9);
@@ -763,11 +884,14 @@
             }
         }
 
-        .card_ma:focus, .side_Cs:focus {
+        /* Focus styles for accessibility */
+        .card_ma:focus,
+        .side_Cs:focus {
             outline: 3px solid var(--neon-blue);
             outline-offset: 2px;
         }
 
+        /* ===== CUSTOM SCROLLBAR ===== */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -786,6 +910,7 @@
             background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
         }
 
+        /* DATE PICKER MODAL CSS */
         .date-picker-modal {
             display: none;
             position: fixed;
@@ -799,10 +924,9 @@
             z-index: 10000;
             justify-content: center;
             align-items: center;
-            transition: opacity 0.3s ease-out;
         }
 
-        .date-picker-modal.active {
+        .active {
             display: flex;
         }
 
@@ -911,6 +1035,7 @@
             box-shadow: 0 8px 20px rgba(245, 87, 108, 0.4);
         }
 
+        /* Responsive */
         @media (max-width: 768px) {
             .date-inputs-container {
                 grid-template-columns: 1fr;
@@ -927,7 +1052,6 @@
             border-radius: 15px;
             padding: 2px;
             background: none;
-            cursor: pointer;
         }
 
         .Choose:hover {
@@ -950,6 +1074,7 @@
     <div id="app" class="hidden">
         <div class="container-wrapper">
             <div class="main-container">
+                <!-- Sidebar with weather details -->
                 <div class="side-bar">
                     <div class="side_Cs">
                         <span class="label"><i class="bi bi-thermometer-half"></i> Feels Like</span>
@@ -975,12 +1100,6 @@
                         <span class="label"><i class="bi bi-clouds"></i> Cloud Cover</span>
                         <span class="value">{{ result[-2] }}<small>%</small></span>
                     </div>
-                    {% if spec == True %}
-                    <div class="side_Cs" id="newadd">
-                        <span class="label"><i class="bi bi-cloud-drizzle"></i> Precipitation</span>
-                        <span class="value">{{ rsult }}<small>mm/day</small></span>
-                    </div>
-                    {% endif %}
                     <div class="side_Cs">
                         <span class="label"><i class="bi bi-tags"></i> Category</span>
                         <span class="value">{{ text }}</span>
@@ -993,6 +1112,7 @@
                             <i class="bi bi-geo-alt"></i>
                         </div>
                         <h1 class="city-name"><strong>{{ city }}</strong></h1>
+                        <!-- Click indicator added here -->
                         <div class="click-indicator">
                             <i class="bi bi-cursor"></i>
                             <span>Click to change location</span>
@@ -1014,6 +1134,7 @@
                     </div>
                 </div>
 
+                <!-- Time display card -->
                 <div class="card_ma time-card">
                     <div class="weather-icon">
                         <i class="bi bi-clock"></i>
@@ -1028,6 +1149,7 @@
         </div>
     </div>
 
+    <!-- Map Modal -->
     <div class="map-modal" id="map-modal">
         <div class="map-container">
             <div class="close-modal" id="close-map">&times;</div>
@@ -1037,19 +1159,19 @@
                 <div class="coordinates-display" id="coordinates">
                     Latitude: --, Longitude: --
                 </div>
-                <div id="app">
-                    <div id="clock">
-                        <p id="date"></p>
+                    <div id="app">
+                        <div id="clock">
+                            <p id="date"></p>
+                        </div>
                     </div>
-                </div>
                 <div class="map-buttons">
                     <button class="map-btn cancel" id="cancel-map">Cancel</button>
                     <button class="map-btn" id="submit-location">Submit</button>
-                    <button onclick="datepopup()" class="Choose">Choose Date</button>
+                    <button  onclick="datepopup()" class="Choose">Choose Date</button>
                 </div>
-
+                
                 <div class="date-picker-modal" id="date-picker-modal">
-                    <form id="date-form" action="/{{lat}}/{{lon}}" method="get">
+                    <form action="/{{lat}}/{{lon}}" method="get">
                         <div class="date-picker-container">
                             <h3 class="date-picker-title">Select Date</h3>
                             <div class="date-inputs-container">
@@ -1067,8 +1189,9 @@
                                 </div>
                             </div>
                             <div class="date-picker-buttons">
-                                <button type="button" class="date-picker-btn cancel" id="cancel-date">Cancel</button>
-                                <button type="submit" class="date-picker-btn" id="apply-date">Apply</button>
+                                <a class="date-picker-btn cancel" id="cancel-date">Cancel</a>
+                                
+                                <button class="date-picker-btn" id="apply-date" type="submit">Apply</button>
                             </div>
                         </div>
                     </form>
@@ -1081,55 +1204,68 @@
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
     <script>
-        function updateClock() {
-            const timeElement = document.getElementById("time");
-            const dateElement = document.getElementById("date");
-            const dateElementPop = document.getElementById("date-pop");
+        // ===== CLOCK FUNCTIONALITY =====
+function updateClock() {
+    const timeElement = document.getElementById("time");
+    const dateElement = document.getElementById("date");
+    const dateElementPop = document.getElementById("date-pop");
 
-            try {
-                const now = new Date();
-                const hours = String(now.getHours()).padStart(2, "0");
-                const minutes = String(now.getMinutes()).padStart(2, "0");
-                const seconds = String(now.getSeconds()).padStart(2, "0");
+    try {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, "0");
+        const minutes = String(now.getMinutes()).padStart(2, "0");
+        const seconds = String(now.getSeconds()).padStart(2, "0");
 
-                const timeString = `${hours}:${minutes}:${seconds}`;
-                const dateOptions = {
-                    weekday: 'long',
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                };
-                const dateString = now.toLocaleDateString('en-US', dateOptions);
+        const timeString = `${hours}:${minutes}:${seconds}`;
+        const dateOptions = {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        };
+        const dateString = now.toLocaleDateString('en-US', dateOptions);
 
-                if (timeElement) timeElement.textContent = timeString;
-                if (dateElement) dateElement.textContent = dateString;
-                if (dateElementPop) dateElementPop.textContent = dateString;
-
-            } catch (error) {
-                console.error('Error updating clock:', error);
-                if (timeElement) timeElement.textContent = "Error";
-                if (dateElement) dateElement.textContent = "--/--/----";
-                if (dateElementPop) dateElementPop.textContent = "--/--/----";
-            }
+        if (timeElement) {
+            timeElement.textContent = timeString;
         }
 
-        function initializeClock() {
-            updateClock();
-            setInterval(updateClock, 1000);
+        if (dateElement) {
+            dateElement.textContent = dateString;
         }
 
-        window.addEventListener('DOMContentLoaded', initializeClock);
+        if (dateElementPop) {
+            dateElementPop.textContent = dateString;
+        }
 
+    } catch (error) {
+        console.error('Error updating clock:', error);
+
+        if (timeElement) timeElement.textContent = "Error";
+        if (dateElement) dateElement.textContent = "--/--/----";
+        if (dateElementPop) dateElementPop.textContent = "--/--/----";
+    }
+}
+
+function initializeClock() {
+    updateClock();
+    setInterval(updateClock, 1000);
+}
+
+window.addEventListener('DOMContentLoaded', initializeClock);
+
+        // ===== LOADING MANAGEMENT =====
         class LoadingManager {
             constructor() {
                 this.totalResources = 0;
                 this.loadedResources = 0;
+
                 this.isComplete = false;
                 this.progressFill = document.getElementById("progress-fill");
                 this.progressText = document.getElementById("progress-text");
                 this.loadingStatus = document.getElementById("loading-status");
                 this.preloader = document.getElementById("preloader");
                 this.app = document.getElementById("app");
+
                 this.init();
             }
 
@@ -1154,6 +1290,7 @@
 
                 const stylesheets = document.querySelectorAll('link[rel="stylesheet"]');
                 const scripts = document.querySelectorAll('script[src]');
+
                 this.totalResources = images.length + bgImageCount + stylesheets.length + scripts.length + 3;
 
                 if (this.totalResources === 3) {
@@ -1215,6 +1352,7 @@
 
             checkBackgroundImages() {
                 const elementsWithBgImages = document.querySelectorAll('*');
+
                 elementsWithBgImages.forEach(element => {
                     const style = window.getComputedStyle(element);
                     const bgImage = style.backgroundImage;
@@ -1222,6 +1360,7 @@
                     if (bgImage && bgImage !== 'none' && bgImage.includes('url(')) {
                         const imageUrl = bgImage.match(/url\(["']?(.*?)["']?\)/)[1];
                         const img = new Image();
+
                         img.onload = () => this.resourceLoaded(`Background image loaded: ${imageUrl.substring(0, 30)}...`);
                         img.onerror = () => this.resourceLoaded(`Background image error: ${imageUrl.substring(0, 30)}...`);
                         img.src = imageUrl;
@@ -1231,9 +1370,11 @@
 
             resourceLoaded(statusMessage = '') {
                 this.loadedResources++;
+
                 if (statusMessage) {
                     this.updateStatus(statusMessage);
                 }
+
                 this.updateProgress();
 
                 if (this.loadedResources >= this.totalResources && !this.isComplete) {
@@ -1245,6 +1386,7 @@
 
             updateProgress() {
                 const progress = Math.min(Math.round((this.loadedResources / this.totalResources) * 100), 99);
+
                 this.progressFill.style.width = progress + "%";
                 this.progressText.textContent = progress + "%";
             }
@@ -1271,8 +1413,10 @@
 
             completeLoading() {
                 if (this.isComplete) return;
+
                 this.isComplete = true;
                 this.loadedResources = this.totalResources;
+
                 this.progressFill.style.width = "100%";
                 this.progressText.textContent = "100%";
                 this.updateStatus("Ready!");
@@ -1355,61 +1499,36 @@
 
         function submitLocation() {
             if (selectedLat != null && selectedLon != null) {
-                const mapModal = document.getElementById('map-modal');
-                mapModal.style.transition = 'opacity 0.5s ease-out';
-                mapModal.style.opacity = '0';
+                const pre = document.getElementById('preloader');
+                const appEl = document.getElementById('app');
+                if (pre) pre.style.display = 'flex';
+                if (appEl) appEl.classList.add('hidden');
 
-                setTimeout(() => {
-                    mapModal.classList.remove('active');
-                    mapModal.style.opacity = '1';
+                const lat = selectedLat.toFixed(6);
+                const lon = selectedLon.toFixed(6);
 
-                    const pre = document.getElementById('preloader');
-                    const appEl = document.getElementById('app');
-                    const statusEl = document.getElementById('loading-status');
-
-                    if (pre) {
-                        pre.style.display = 'flex';
-                        pre.style.opacity = '0';
-                        setTimeout(() => pre.style.opacity = '1', 50);
-                    }
-                    if (appEl) {
-                        appEl.style.transition = 'opacity 0.3s ease-out';
-                        appEl.style.opacity = '0';
-                        setTimeout(() => appEl.classList.add('hidden'), 300);
-                    }
-
-                    const messages = [
-                        'Sending location data...',
-                        'Fetching weather information...',
-                        'Processing results...',
-                        'Almost ready...'
-                    ];
-
-                    let msgIndex = 0;
-                    const statusInterval = setInterval(() => {
-                        if (statusEl && msgIndex < messages.length) {
-                            statusEl.style.opacity = '0';
-                            setTimeout(() => {
-                                statusEl.textContent = messages[msgIndex];
-                                statusEl.style.opacity = '1';
-                                msgIndex++;
-                            }, 200);
-                        }
-                    }, 1000);
-
-                    const lat = selectedLat.toFixed(6);
-                    const lon = selectedLon.toFixed(6);
-
-                    setTimeout(() => {
-                        clearInterval(statusInterval);
-                        window.location.href = `/${encodeURIComponent(lat)}/${encodeURIComponent(lon)}`;
-                    }, 1500);
-                }, 500);
+                window.location.href = `/${encodeURIComponent(lat)}/${encodeURIComponent(lon)}`;
             } else {
                 alert('Please select a location on the map first.');
             }
         }
 
+        function fetchWeatherByCoords(lat, lon) {
+            document.getElementById('preloader').style.display = 'flex';
+            document.getElementById('app').classList.add('hidden');
+            console.log(`Fetching weather for coordinates: ${lat}, ${lon}`);
+            setTimeout(() => {
+                window.location.reload();
+            }, 1500);
+        }
+
+        let clockInterval;
+        function initializeClock() {
+            updateClock();
+            clockInterval = setInterval(updateClock, 1000);
+        }
+
+        // ===== PERFORMANCE OPTIMIZATION =====
         function optimizeForLowBattery() {
             if ('getBattery' in navigator) {
                 navigator.getBattery().then(function (battery) {
@@ -1421,11 +1540,13 @@
             }
         }
 
+        // ===== INITIALIZATION =====
         function initApp() {
             initializeClock();
             optimizeForLowBattery();
 
             document.getElementById('city-card').addEventListener('click', openMapModal);
+
             document.getElementById('close-map').addEventListener('click', closeMapModal);
             document.getElementById('cancel-map').addEventListener('click', closeMapModal);
             document.getElementById('submit-location').addEventListener('click', submitLocation);
@@ -1437,6 +1558,7 @@
             });
         }
 
+        // ===== START APPLICATION =====
         let loadingManager;
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', function () {
@@ -1448,128 +1570,82 @@
             initApp();
         }
 
+        // DATE PICKER JAVASCRIPT
         function populateDateSelects() {
             const daySelect = document.getElementById('day-select');
             const monthSelect = document.getElementById('month-select');
             const yearSelect = document.getElementById('year-select');
 
+            // Populate days (1-31)
             for (let i = 1; i <= 31; i++) {
                 daySelect.add(new Option(i, i));
             }
 
+            // Populate months
             const months = ['January', 'February', 'March', 'April', 'May', 'June',
                 'July', 'August', 'September', 'October', 'November', 'December'];
             months.forEach((month, index) => {
                 monthSelect.add(new Option(month, index + 1));
             });
 
+            // Populate years (current year ± 100 years)
             const currentYear = new Date().getFullYear();
-            for (let i = currentYear - 50; i <= currentYear + 50; i++) {
+            for (let i = currentYear; i <= currentYear + 100; i++) {
                 yearSelect.add(new Option(i, i));
             }
 
+            // Set current date as default
             const now = new Date();
             daySelect.value = now.getDate();
             monthSelect.value = now.getMonth() + 1;
             yearSelect.value = now.getFullYear();
         }
 
+        function openDatePicker() {
+            document.getElementById('date-picker-modal').classList.add('active');
+            // Update to current date
+            const now = new Date();
+            document.getElementById('day-select').value = now.getDate();
+            document.getElementById('month-select').value = now.getMonth() + 1;
+            document.getElementById('year-select').value = now.getFullYear();
+        }
+
         function closeDatePicker() {
-            const modal = document.getElementById('date-picker-modal');
-            modal.style.opacity = '0';
-            setTimeout(() => {
-                modal.classList.remove('active');
-                modal.style.opacity = '1';
-            }, 300);
+            document.getElementById('date-picker-modal').classList.remove('active');
         }
 
-        function showLoadingForDateSelection() {
-            const preloader = document.getElementById('preloader');
-            const app = document.getElementById('app');
-            const statusEl = document.getElementById('loading-status');
-            const progressFill = document.getElementById('progress-fill');
-            const progressText = document.getElementById('progress-text');
-
-            if (app) {
-                app.style.transition = 'opacity 0.3s ease-out';
-                app.style.opacity = '0';
-                setTimeout(() => app.classList.add('hidden'), 300);
-            }
-
-            if (preloader) {
-                preloader.style.display = 'flex';
-                preloader.style.opacity = '0';
-                setTimeout(() => preloader.style.opacity = '1', 50);
-            }
-
-            let progress = 0;
-            const progressInterval = setInterval(() => {
-                progress += Math.random() * 15;
-                if (progress > 90) progress = 90;
-
-                if (progressFill) progressFill.style.width = progress + '%';
-                if (progressText) progressText.textContent = Math.round(progress) + '%';
-            }, 200);
-
-            const messages = [
-                'Processing date selection...',
-                'Fetching historical weather...',
-                'Loading data...',
-                'Preparing display...'
-            ];
-
-            let msgIndex = 0;
-            const statusInterval = setInterval(() => {
-                if (statusEl && msgIndex < messages.length) {
-                    statusEl.style.opacity = '0';
-                    setTimeout(() => {
-                        statusEl.textContent = messages[msgIndex];
-                        statusEl.style.opacity = '1';
-                        msgIndex++;
-                    }, 200);
-                }
-            }, 1000);
-
-            return { progressInterval, statusInterval };
+        function applyDateSelection() {
+            const day = document.getElementById('day-select').value;
+            const month = document.getElementById('month-select').value;
+            const year = document.getElementById('year-select').value;
+            
+            const selectedDate = new Date(year, month - 1, day);
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            
+            // Update your date element (adjust the ID as needed)
+            document.getElementById('date-pop').textContent = selectedDate.toLocaleDateString('en-US', options);
+            
+            closeDatePicker();
         }
 
-        document.addEventListener('DOMContentLoaded', function () {
+        // Initialize and add event listeners
+        document.addEventListener('DOMContentLoaded', function() {
             populateDateSelects();
-
-            const dateForm = document.getElementById('date-form');
-            const cancelBtn = document.getElementById('cancel-date');
-
-            if (cancelBtn) {
-                cancelBtn.addEventListener('click', closeDatePicker);
-            }
-
-            if (dateForm) {
-                dateForm.addEventListener('submit', function (e) {
-                    e.preventDefault();
-
-                    const day = document.getElementById('day-select').value;
-                    const month = document.getElementById('month-select').value;
-                    const year = document.getElementById('year-select').value;
-
-                    if (!day || !month || !year) {
-                        alert('Please select a complete date');
-                        return;
-                    }
-
-                    const dateModal = document.getElementById('date-picker-modal');
-                    dateModal.style.opacity = '0';
-
-                    setTimeout(() => {
-                        dateModal.classList.remove('active');
-                        showLoadingForDateSelection();
-
-                        setTimeout(() => {
-                            dateForm.submit();
-                        }, 1500);
-                    }, 300);
-                });
-            }
+            
+            // Add click event to date element to open picker
+            document.getElementById('date-pop').addEventListener('click', openDatePicker);
+            
+            // Button event listeners
+            document.getElementById('cancel-date').addEventListener('click', closeDatePicker);
+            document.getElementById('apply-date').addEventListener('click', applyDateSelection);
+            
+            // Close on background click
+            document.getElementById('date-picker-modal').addEventListener('click', function(e) {
+                if (e.target === this) closeDatePicker();
+            });
         });
+
+        let counter = 0
 
         function datepopup() {
             const modal = document.getElementById('date-picker-modal');
