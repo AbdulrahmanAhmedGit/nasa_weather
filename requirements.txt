@@ -1,0 +1,6 @@
+Flask
+requests
+xarray
+numpy
+netCDF4
+pydap
