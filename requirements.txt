@@ -2,5 +2,4 @@ Flask
 requests
 numpy
 xarray
-sqlite3-binary
 gunicorn
